@@ -1,6 +1,6 @@
+from django.contrib import admin
 from django.urls import path
 from .views import FranchiseList, FranchiseDetail, BranchList, BranchDetail, TransactionList, TransactionDetail, SaleList, SaleDetail, ExpenseList, ExpenseDetail, dashboard_data
-
 urlpatterns = [
     path('api/franchises/', FranchiseList.as_view()),
     path('api/franchises/<pk>/', FranchiseDetail.as_view()),

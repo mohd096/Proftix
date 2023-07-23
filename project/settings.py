@@ -16,6 +16,43 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp-relay.brevo.com"                    # smtp-relay.sendinblue.com
+EMAIL_USE_TLS = False                               # False
+EMAIL_PORT = "587"                    # 587
+EMAIL_HOST_USER = "proftix.bh@gmail.com"
+EMAIL_HOST_PASSWORD = "Vd2UTKP3Bnar6Yfk"       # your password
+DEFAULT_FROM_EMAIL = "proftix.bh@gmail.com"    # email ending with @sendinblue.com
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+
+# <EMAIL_CONFIRM_REDIRECT_BASE_URL>/<key>
+EMAIL_CONFIRM_REDIRECT_BASE_URL = \
+    "http://localhost:3000/email/confirm/"
+
+# <PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL>/<uidb64>/<token>/
+PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = \
+    "http://localhost:3000/password-reset/confirm/"
+
+
+SOCIALACCOUNT_PROVIDERS = {
+    "google": {
+        "APP": {
+            "client_id": "709331594264-437e5qd08bi27r4noag8s4nrnm3v4g40.apps.googleusercontent.com",  # replace me
+            "secret": "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",        # replace me
+            "key": "",                               # leave empty
+        },
+        "SCOPE": [
+            "profile",
+            "email",
+        ],
+        "AUTH_PARAMS": {
+            "access_type": "online",
+        },
+        "VERIFIED_EMAIL": True,
+    },
+}
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -37,6 +74,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
     'proftix',
     'rest_framework',
     'token_auth',
@@ -46,7 +84,18 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'dj_rest_auth.registration',
     'corsheaders',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
+
+# Auth backends
+AUTHENTICATION_BACKENDS = [
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+
+# REST framework settings
+REST_USE_JWT = True
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,7 +118,7 @@ ROOT_URLCONF = 'project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ["templates"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -145,6 +194,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.TokenAuthentication',
     ]
 }
+APPEND_SLASH = False
 
-AUTH_USER_MODEL = 'token_auth.User'
+# AUTH_USER_MODEL = 'token_auth.User'
 SITE_ID = 1

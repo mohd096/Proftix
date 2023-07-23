@@ -5,7 +5,10 @@ from .serializers import FranchiseSerializer , BranchSerializer, TransactionSeri
 from django.http import JsonResponse
 from django.db import models
 
+
 # Create your views here.
+
+
 
 def dashboard_data(request):
     # Get the total sales for each branch

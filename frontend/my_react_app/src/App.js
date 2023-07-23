@@ -1,7 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom'
 import './App.css';
 import Dashboard from './components/Dashboard';
+import Registration from './components/Registration';
+import Login from './components/Login';
+import Logout from './components/Logout';
+
 
 const App = () => {
   const [franchises, setFranchises ] = useState([]);
@@ -32,10 +37,27 @@ const App = () => {
     fetchBranches();
   }, []);
 
-  return (
-    <div>      
-      <Dashboard />
 
+  
+  return (
+    
+    <div>      
+
+
+      <Router>
+      <div>
+            <Link to="/register">Signup</Link> &nbsp;
+            <Link to="/login">Signin</Link> &nbsp;
+            {/* <Link to="/logout" onClick={logoutHandler}>logout</Link> &nbsp; */}
+          </div>
+        <Routes>
+        <Route exact path="/register" element={<Registration/>} />
+        <Route exact path="/login" element={<Login  />} />
+        {/* <Route exact path="/logout" element={<Logout logout={logoutHandler} />} /> */}
+        </Routes>
+    </Router>
+
+      <Dashboard />
       <h2>List of Franchises:</h2>
       <ul>
         {franchises.map((franchise) => (
