@@ -93,6 +93,14 @@ from django.http import HttpResponseRedirect
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from dj_rest_auth.registration.views import RegisterView
+from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
+from allauth.socialaccount.views import signup
+from .serializers import UserDetailsSerializer
+from rest_framework import status
+from rest_framework.response import Response
+
+
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
@@ -109,3 +117,44 @@ def password_reset_confirm_redirect(request, uidb64, token):
     return HttpResponseRedirect(
         f"{settings.PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL}{uidb64}/{token}/"
     )
+
+class CustomRegisterView(RegisterView):
+    def get_response_data(self, user):
+        return {
+            "user": UserDetailsSerializer(user, context=self.get_serializer_context()).data
+        }
+    
+class CustomLoginView(LoginView):
+    def get_response_data(self, user):
+        return {
+            "user": UserDetailsSerializer(user, context=self.get_serializer_context()).data
+        }
+    
+class CustomLogoutView(LogoutView):
+    def get_response(self):
+        return Response({"detail": ("Successfully logged out.")},
+                        status=status.HTTP_200_OK)
+    
+class CustomUserDetailsView(UserDetailsView):
+    def get_response_data(self, user):
+        return {
+            "user": UserDetailsSerializer(user, context=self.get_serializer_context()).data
+        }
+    
+class CustomPasswordResetView(PasswordResetView):
+    def get_response(self):
+        return Response({"detail": ("Password reset e-mail has been sent.")},
+                        status=status.HTTP_200_OK)
+    
+class CustomPasswordResetConfirmView(PasswordResetConfirmView):
+    def get_response(self):
+        return Response({"detail": ("Password has been reset with the new password.")},
+                        status=status.HTTP_200_OK)
+    
+class CustomPasswordChangeView(PasswordChangeView):
+    def get_response(self):
+        return Response({"detail": ("New password has been saved.")},
+                        status=status.HTTP_200_OK)
+    
+
+    

@@ -113,6 +113,24 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000", 
 ]
 
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',  # Add 'content-type' to the list of allowed headers
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Access-Control-Allow-Origin',
+    'Access-Control-Allow-Headers',
+    'Access-Control-Allow-Methods',
+    'Access-Control-Allow-Credentials',
+]
+CORS_ALLOW_CREDENTIALS = True
+
+
 ROOT_URLCONF = 'project.urls'
 
 TEMPLATES = [
@@ -196,5 +214,5 @@ REST_FRAMEWORK = {
 }
 APPEND_SLASH = False
 
-# AUTH_USER_MODEL = 'token_auth.User'
+AUTH_USER_MODEL = 'token_auth.User'
 SITE_ID = 1

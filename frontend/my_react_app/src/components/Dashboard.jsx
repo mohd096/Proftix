@@ -40,8 +40,8 @@ const Dashboard = () => {
         ],
       };
 
-      const chartWidth = 400; 
-      const chartHeight = 300;
+    const chartWidth = 400; 
+    const chartHeight = 300;
 
   const chartOptions = {
     responsive: true,

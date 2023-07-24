@@ -9,7 +9,7 @@
 
   <h3> Login Page</h3>
  
-  <form action="/api/login/" method="post">
+  <form action="/api/auth/login/" method="post">
     {% csrf_token %}
     <label for="">Username</label>
     <input type="text" id="username" name="username" placeholder="Enter Your Username" required>
