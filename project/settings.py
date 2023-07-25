@@ -11,48 +11,42 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+
+# Rest of your Django settings
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
-EMAIL_HOST = "smtp-relay.brevo.com"                    # smtp-relay.sendinblue.com
-EMAIL_USE_TLS = False                               # False
-EMAIL_PORT = "587"                    # 587
-EMAIL_HOST_USER = "proftix.bh@gmail.com"
-EMAIL_HOST_PASSWORD = "Vd2UTKP3Bnar6Yfk"       # your password
-DEFAULT_FROM_EMAIL = "proftix.bh@gmail.com"    # email ending with @sendinblue.com
-
-ACCOUNT_EMAIL_REQUIRED = True
-ACCOUNT_EMAIL_VERIFICATION = "mandatory"
-
-# <EMAIL_CONFIRM_REDIRECT_BASE_URL>/<key>
-EMAIL_CONFIRM_REDIRECT_BASE_URL = \
-    "http://localhost:3000/email/confirm/"
-
-# <PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL>/<uidb64>/<token>/
-PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = \
-    "http://localhost:3000/password-reset/confirm/"
-
-
+EMAIL_BACKEND = os.environ.get("EMAIL_BACKEND")
+EMAIL_HOST = os.environ.get("EMAIL_HOST")
+EMAIL_USE_TLS = os.environ.get("EMAIL_USE_TLS") == "True"
+EMAIL_PORT = int(os.environ.get("EMAIL_PORT", 587))
+EMAIL_HOST_USER = os.environ.get("EMAIL_HOST_USER")
+EMAIL_HOST_PASSWORD = os.environ.get("EMAIL_HOST_PASSWORD")
+DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL")
+ACCOUNT_EMAIL_REQUIRED = os.environ.get("ACCOUNT_EMAIL_REQUIRED") == "True"
+ACCOUNT_EMAIL_VERIFICATION = os.environ.get("ACCOUNT_EMAIL_VERIFICATION")
+EMAIL_CONFIRM_REDIRECT_BASE_URL = os.environ.get("EMAIL_CONFIRM_REDIRECT_BASE_URL")
+PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL = os.environ.get("PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL")
 SOCIALACCOUNT_PROVIDERS = {
     "google": {
         "APP": {
-            "client_id": "709331594264-437e5qd08bi27r4noag8s4nrnm3v4g40.apps.googleusercontent.com",  # replace me
-            "secret": "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",        # replace me
-            "key": "",                               # leave empty
+            "client_id": os.environ.get("SOCIALACCOUNT_PROVIDERS_GOOGLE_APP_CLIENT_ID"),
+            "secret": os.environ.get("SOCIALACCOUNT_PROVIDERS_GOOGLE_APP_SECRET"),
+            "key": "",
         },
-        "SCOPE": [
-            "profile",
-            "email",
-        ],
-        "AUTH_PARAMS": {
-            "access_type": "online",
-        },
+        "SCOPE": ["profile", "email"],
+        "AUTH_PARAMS": {"access_type": "online"},
         "VERIFIED_EMAIL": True,
     },
 }
+
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
@@ -128,6 +122,16 @@ CORS_ALLOW_HEADERS = [
     'Access-Control-Allow-Methods',
     'Access-Control-Allow-Credentials',
 ]
+
+CORS_ALLOW_METHODS = (
+    "DELETE",
+    "GET",
+    "OPTIONS",
+    "PATCH",
+    "POST",
+    "PUT",
+)
+
 CORS_ALLOW_CREDENTIALS = True
 
 

@@ -93,19 +93,52 @@ from django.http import HttpResponseRedirect
 from dj_rest_auth.registration.views import SocialLoginView
 from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
 from allauth.socialaccount.providers.oauth2.client import OAuth2Client
-from dj_rest_auth.registration.views import RegisterView
-from dj_rest_auth.views import LoginView, LogoutView, UserDetailsView, PasswordResetView, PasswordResetConfirmView, PasswordChangeView
-from allauth.socialaccount.views import signup
-from .serializers import UserDetailsSerializer
-from rest_framework import status
-from rest_framework.response import Response
 
+from django.contrib.auth import login
+from django.contrib.auth.models import User
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from allauth.socialaccount.providers.oauth2.client import OAuth2Error
+from allauth.socialaccount.providers.oauth2.views import OAuth2View
+from django.http import JsonResponse
 
 
 class GoogleLogin(SocialLoginView):
     adapter_class = GoogleOAuth2Adapter
     callback_url = "http://localhost:3000/"
     client_class = OAuth2Client
+    def post(self, request, *args, **kwargs):
+        try:
+            # Get the token sent from the React frontend
+            token = request.data.get("token")
+            if not token:
+                return JsonResponse({"error": "Token not provided"}, status=400)
+
+            # Authenticate the user using the token
+            self.adapter_class.validate_token(token)
+            user_info = self.adapter_class.get_user_info(token)
+            self.adapter_class.validate_response(user_info)
+
+            # Check if the user already exists in your database
+            user, created = User.objects.get_or_create(email=user_info['email'], defaults={'username': user_info['email']})
+
+            # Update the user's information (e.g., name) if necessary
+            if created:
+                user.username = user_info['username']
+                user.first_name = user_info['first_name']
+                user.last_name = user_info['last_name']
+                user.email = user_info['email']
+                user.save()
+
+            # Log in the user using Django's login() function
+            login(request, user)
+
+            # Return a success response to the frontend
+            return JsonResponse({"success": "User authenticated successfully!"}, status=200)
+
+        except OAuth2Error as e:
+            return JsonResponse({"error": str(e)}, status=400)
+
+
 
 def email_confirm_redirect(request, key):
     return HttpResponseRedirect(
@@ -118,43 +151,4 @@ def password_reset_confirm_redirect(request, uidb64, token):
         f"{settings.PASSWORD_RESET_CONFIRM_REDIRECT_BASE_URL}{uidb64}/{token}/"
     )
 
-class CustomRegisterView(RegisterView):
-    def get_response_data(self, user):
-        return {
-            "user": UserDetailsSerializer(user, context=self.get_serializer_context()).data
-        }
-    
-class CustomLoginView(LoginView):
-    def get_response_data(self, user):
-        return {
-            "user": UserDetailsSerializer(user, context=self.get_serializer_context()).data
-        }
-    
-class CustomLogoutView(LogoutView):
-    def get_response(self):
-        return Response({"detail": ("Successfully logged out.")},
-                        status=status.HTTP_200_OK)
-    
-class CustomUserDetailsView(UserDetailsView):
-    def get_response_data(self, user):
-        return {
-            "user": UserDetailsSerializer(user, context=self.get_serializer_context()).data
-        }
-    
-class CustomPasswordResetView(PasswordResetView):
-    def get_response(self):
-        return Response({"detail": ("Password reset e-mail has been sent.")},
-                        status=status.HTTP_200_OK)
-    
-class CustomPasswordResetConfirmView(PasswordResetConfirmView):
-    def get_response(self):
-        return Response({"detail": ("Password has been reset with the new password.")},
-                        status=status.HTTP_200_OK)
-    
-class CustomPasswordChangeView(PasswordChangeView):
-    def get_response(self):
-        return Response({"detail": ("New password has been saved.")},
-                        status=status.HTTP_200_OK)
-    
 
-    

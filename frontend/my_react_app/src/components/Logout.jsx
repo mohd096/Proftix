@@ -41,11 +41,23 @@
 
 import React from "react";
 import axios from "axios";
+import { useState } from "react";
+
 
 const LogoutComponent = () => {
+
+  const [  setUser ] = useState([]);
+  const [ setIsAuth] = useState(false);//check if user is authenticated
+
   const handleLogout = () => {
+
     axios.post("http://localhost:8000/api/auth/logout/")
       .then((response) => {
+        localStorage.removeItem("token");
+        setIsAuth(false);
+        setUser(null);
+        // Redirect to the login page after logout
+        window.location.href = "/login";
         // Handle successful logout here
         console.log("Logout successful:", response.data);
       })
@@ -57,8 +69,8 @@ const LogoutComponent = () => {
 
   return (
     <div>
-      <h2>Logout</h2>
-      <button onClick={handleLogout}>Logout</button>
+      {/* <h2>Logout</h2>
+      <button onClick={handleLogout}>Logout</button> */}
     </div>
   );
 };

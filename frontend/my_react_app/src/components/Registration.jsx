@@ -97,9 +97,12 @@
 
 import React, { useState } from "react";
 import axios from "axios";
+import { Container, Form, Button } from "react-bootstrap";
 
 const RegisterComponent = () => {
   const [username, setUsername] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -107,6 +110,8 @@ const RegisterComponent = () => {
   const handleRegister = () => {
     const data = {
       username: username,
+      first_name: firstname,
+      last_name: lastname,
       email: email,
       password1: password1,
       password2: password2,
@@ -124,14 +129,51 @@ const RegisterComponent = () => {
   };
 
   return (
-    <div>
-      <h2>Register</h2>
-      <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-      <input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-      <input type="password" placeholder="Password" onChange={(e) => setPassword1(e.target.value)} />
-      <input type="password" placeholder="Confirm Password" onChange={(e) => setPassword2(e.target.value)} />
-      <button onClick={handleRegister}>Register</button>
-    </div>
+    <>
+    <h1 className="sign-logo">Register</h1>
+    <Container>
+      <Form.Group>
+        <Form.Label>Username</Form.Label>
+        <Form.Control name="username" onChange={(e) => setUsername(e.target.value)} ></Form.Control>
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Email</Form.Label>
+        <Form.Control name="emailAddress" onChange={(e) => setEmail(e.target.value)}></Form.Control>
+      </Form.Group> 
+      <Form.Group>
+        <Form.Label>Password</Form.Label>
+        <Form.Control type="password" name="password1" onChange={(e) => setPassword1(e.target.value)}></Form.Control>
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Confirm password</Form.Label>
+        <Form.Control type="password" name="password2" onChange={(e) => setPassword2(e.target.value)}></Form.Control>
+      </Form.Group>
+
+      <Button onClick={handleRegister} 
+      variant="primary">
+        Register
+      </Button>
+
+    </Container>
+  </>
+
+
+
+
+
+
+
+
+
+
+    // <div>
+    //   <h2>Register</h2>
+    //   <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
+    //   <input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
+    //   <input type="password" placeholder="Password" onChange={(e) => setPassword1(e.target.value)} />
+    //   <input type="password" placeholder="Confirm Password" onChange={(e) => setPassword2(e.target.value)} />
+    //   <button onClick={handleRegister}>Register</button>
+    // </div>
   );
 };
 

@@ -17,7 +17,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(), name="rest_login"),
     path("logout/", LogoutView.as_view(), name="rest_logout"),
     path("user/", UserDetailsView.as_view(), name="rest_user_details"),
-    path("register/verify-email/", VerifyEmailView.as_view(), name="rest_verify_email"),
+    # path("register/verify-email/", VerifyEmailView.as_view(), name="rest_verify_email"),
     path("register/resend-email/", ResendEmailVerificationView.as_view(), name="rest_resend_email"),
     path("account-confirm-email/<str:key>/", email_confirm_redirect, name="account_confirm_email"),
     path("account-confirm-email/", VerifyEmailView.as_view(), name="account_email_verification_sent"),
@@ -30,6 +30,5 @@ urlpatterns = [
     path("password/reset/confirm/", PasswordResetConfirmView.as_view(), name="password_reset_confirm"),
     path("signup/", signup, name="socialaccount_signup"),
     path("google/", GoogleLogin.as_view(), name="google_login"),
-
 
 ]

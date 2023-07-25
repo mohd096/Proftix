@@ -7,7 +7,8 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 const Dashboard = () => {
   const [data, setData] = useState([]);
-
+  const [franchises, setFranchises ] = useState([]);
+  const [branches, setBranches ] = useState([]);
   useEffect(() => {
     fetchDashboardData();
   }, []);
@@ -21,6 +22,30 @@ const Dashboard = () => {
     }
   };
 
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/franchises/');
+      setFranchises(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const fetchBranches = async () => {
+    try {
+      const response = await axios.get('http://localhost:8000/api/branches/');
+      setBranches(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  useEffect(() => {
+    fetchBranches();
+  }, []);
 
 
     // Format the data for the Doughnut chart
@@ -94,7 +119,22 @@ const Dashboard = () => {
               <td>{item.profit_or_loss}</td>
             </tr>
           ))}
-          
+                  <div>
+      <h2>List of Franchises:</h2>
+
+      <ul>
+        {franchises.map((franchise) => (
+          <li key={franchise.id}>{franchise.name}</li>
+        ))}
+
+      </ul>
+      <h2>List of Branches:</h2>
+      <ul>
+        {branches.map((branch) => (
+          <li key={branch.id}>{branch.name}</li>
+        ))}
+      </ul>
+    </div>
           
         </tbody>
         
