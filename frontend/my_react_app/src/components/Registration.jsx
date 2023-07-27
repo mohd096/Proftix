@@ -1,108 +1,9 @@
-// import React, { useState } from 'react';
-
-// const Registration = () => {
-//   const [username, setUsername] = useState('');
-//   const [email, setEmail] = useState('');
-//   const [password1, setPassword] = useState('');
-//   // const [password2, setPassword] = useState('');
-
-
-//   const handleRegister = (e) => {
-//     e.preventDefault();
-
-//     // API endpoint for registration in Django
-//     const url = 'http://localhost:8000/api/auth/register/';
-    
-//     // Data to be sent to the server
-//     const data = {
-//       username: username,
-//       email: email,
-//       pass1: password1,
-//       // pass2: password2
-
-//     };
-
-//     // Send a POST request to the server
-//     fetch(url, {
-//       method: 'POST',
-//       headers: {
-//         'Content-Type': 'application/json',
-//         'X-CSRFToken': getCookie('csrftoken') // Replace 'csrftoken' with your CSRF cookie name
-//       },
-//       body: JSON.stringify(data)
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//       // Handle the response from the server
-//       // For example, you could redirect to a success page or display a success message
-//       console.log(data);
-//     })
-//     .catch(error => {
-//       // Handle errors if the registration fails
-//       console.error('Error:', error);
-//     });
-//   };
-
-//   // Helper function to get CSRF token from cookies
-//   function getCookie(name) {
-//     let cookieValue = null;
-//     if (document.cookie && document.cookie !== '') {
-//       const cookies = document.cookie.split(';');
-//       for (let i = 0; i < cookies.length; i++) {
-//         const cookie = cookies[i].trim();
-//         if (cookie.substring(0, name.length + 1) === (name + '=')) {
-//           cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-//           break;
-//         }
-//       }
-//     }
-//     return cookieValue;
-//   }
-
-//   return (
-//     <form onSubmit={handleRegister}>
-//       <input
-//         type="text"
-//         placeholder="Username"
-//         value={username}
-//         onChange={(e) => setUsername(e.target.value)}
-//         required
-//       />
-//       <input
-//         type="email"
-//         placeholder="Email"
-//         value={email}
-//         onChange={(e) => setEmail(e.target.value)}
-//         required
-//       />
-//       <input
-//         type="pass1"
-//         placeholder="Enter password"
-//         value={password1}
-//         onChange={(e) => setPassword(e.target.value)}
-//         required
-//       />
-//       {/* <input type="password2"
-//       placeholder='Confirm password'
-//       value={password2}
-//       onChange={(e) => setPassword(e.target.value)}
-//       required
-//       /> */}
-//       <button type="submit">Register</button>
-//     </form>
-//   );
-// };
-
-// export default Registration;
-
 import React, { useState } from "react";
 import axios from "axios";
-import { Container, Form, Button } from "react-bootstrap";
+import { redirect } from "react-router-dom";
 
 const RegisterComponent = () => {
   const [username, setUsername] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
   const [password1, setPassword1] = useState("");
   const [password2, setPassword2] = useState("");
@@ -110,8 +11,6 @@ const RegisterComponent = () => {
   const handleRegister = () => {
     const data = {
       username: username,
-      first_name: firstname,
-      last_name: lastname,
       email: email,
       password1: password1,
       password2: password2,
@@ -121,6 +20,11 @@ const RegisterComponent = () => {
       .then((response) => {
         // Handle successful registration here
         console.log("Registration successful:", response.data);
+        // Cheack your inbox for email confirmation link alert
+        alert("Check your inbox for email confirmation link");
+        // Redirect the user to the login page
+        window.location.href = "/";
+        
       })
       .catch((error) => {
         // Handle registration error here
@@ -129,52 +33,87 @@ const RegisterComponent = () => {
   };
 
   return (
+
     <>
-    <h1 className="sign-logo">Register</h1>
-    <Container>
-      <Form.Group>
-        <Form.Label>Username</Form.Label>
-        <Form.Control name="username" onChange={(e) => setUsername(e.target.value)} ></Form.Control>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Email</Form.Label>
-        <Form.Control name="emailAddress" onChange={(e) => setEmail(e.target.value)}></Form.Control>
-      </Form.Group> 
-      <Form.Group>
-        <Form.Label>Password</Form.Label>
-        <Form.Control type="password" name="password1" onChange={(e) => setPassword1(e.target.value)}></Form.Control>
-      </Form.Group>
-      <Form.Group>
-        <Form.Label>Confirm password</Form.Label>
-        <Form.Control type="password" name="password2" onChange={(e) => setPassword2(e.target.value)}></Form.Control>
-      </Form.Group>
+    <section className="vh-100" style={{ backgroundColor: "#eee" }}>
+      <div className="container h-100">
+        <div className="row d-flex justify-content-center align-items-center h-100">
+          <div className="col-lg-12 col-xl-11">
+            <div className="card text-black" style={{ borderRadius: "25px" }}>
+              <div className="card-body p-md-5">
+                <div className="row justify-content-center">
+                  <div className="col-md-10 col-lg-6 col-xl-5 order-2 order-lg-1">
 
-      <Button onClick={handleRegister} 
-      variant="primary">
-        Register
-      </Button>
+                    <p className="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign up</p>
 
-    </Container>
-  </>
+                    <form className="mx-1 mx-md-4">
 
+                      <div className="d-flex flex-row align-items-center mb-4">
+                        <i className="fas fa-user fa-lg me-3 fa-fw"></i>
+                        <div className="form-outline flex-fill mb-0">
+                          <input type="text" id="form3Example1c" className="form-control" onChange={(e) => setUsername(e.target.value)} value={username} />
+                          <label className="form-label" htmlFor="form3Example1c">Username</label>
+                        </div>
+                      </div>
 
+                      <div className="d-flex flex-row align-items-center mb-4">
+                        <i className="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                        <div className="form-outline flex-fill mb-0">
+                          <input type="email" id="form3Example3c" className="form-control" onChange={(e) => setEmail(e.target.value)} value={email} />
+                          <label className="form-label" htmlFor="form3Example3c">Your Email</label>
+                        </div>
+                      </div>
 
+                      <div className="d-flex flex-row align-items-center mb-4">
+                        <i className="fas fa-lock fa-lg me-3 fa-fw"></i>
+                        <div className="form-outline flex-fill mb-0">
+                          <input type="password" id="form3Example4c" className="form-control" onChange={(e) => setPassword1(e.target.value)} value={password1} />
+                          <label className="form-label" htmlFor="form3Example4c">Password</label>
+                        </div>
+                      </div>
 
+                      <div className="d-flex flex-row align-items-center mb-4">
+                        <i className="fas fa-key fa-lg me-3 fa-fw"></i>
+                        <div className="form-outline flex-fill mb-0">
+                          <input type="password" id="form3Example4cd" className="form-control" onChange={(e) => setPassword2(e.target.value)} value={password2} />
+                          <label className="form-label" htmlFor="form3Example4cd">Repeat your password</label>
+                        </div>
+                      </div>
 
+                      <div className="form-check d-flex justify-content-center mb-5">
+                        <input className="form-check-input me-2" type="checkbox" value="" id="form2Example3c" />
+                        <label className="form-check-label" htmlFor="form2Example3">
+                          I agree to all statements in <a href="#!">Terms of service</a>
+                        </label>
+                      </div>
 
+                      <div className="d-flex justify-content-center mx-4 mb-3 mb-lg-4">
+                        <button type="button" className="btn btn-primary btn-lg" onClick={handleRegister}>Register</button>
+                      </div>
 
+                    </form>
 
+                  </div>
+                  <div className="col-md-10 col-lg-6 col-xl-7 d-flex align-items-center order-1 order-lg-2">
 
+                    <img src="https://i.imgur.com/XCSxO8w_d.webp?maxwidth=760&fidelity=grand"
+                      className="img-fluid" alt="Sample image" />
 
-    // <div>
-    //   <h2>Register</h2>
-    //   <input type="text" placeholder="Username" onChange={(e) => setUsername(e.target.value)} />
-    //   <input type="text" placeholder="Email" onChange={(e) => setEmail(e.target.value)} />
-    //   <input type="password" placeholder="Password" onChange={(e) => setPassword1(e.target.value)} />
-    //   <input type="password" placeholder="Confirm Password" onChange={(e) => setPassword2(e.target.value)} />
-    //   <button onClick={handleRegister}>Register</button>
-    // </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+</>
   );
 };
+    
+    
+    
+   
+   
 
-export default RegisterComponent;
+  export default RegisterComponent;

@@ -10,6 +10,11 @@ import EmailConfirmation from './components/EmailConfirmation';
 import GoogleLoginComponent from './components/GoogleLoginComponent';
 // import Logout from './components/Logout';
 import ForgetPassword from './components/ForgetPassword';
+import PasswordRest from './components/PasswordRest';
+import logoImage from './components/image/logo.png';
+import AdminPanel from './components/AdminPanel';
+import {LuLogOut} from 'react-icons/lu';
+import Bar from './components/Bar';
 import Error from './components/Error';
 
 
@@ -41,7 +46,7 @@ const handleLogout = () => {
       setIsAuth(false);
       setUser(null);
       // Redirect to the login page after logout
-      window.location.href = "/login";
+      window.location.href = "/";
       // Handle successful logout here
       console.log("Logout successful:", response.data);
     })
@@ -59,32 +64,27 @@ const handleLogout = () => {
     <Router >     
            <nav>
   <div className="navbar">
-    {isAuth ? null : (
-      <>
-        <Link to="/login">Log in</Link>&nbsp;
-        <Link to="/register">Register</Link>&nbsp;
-        <Link to="/api/auth/google/">Google Login</Link>&nbsp;
-        
-      </>
-    )}
-    {isAuth && <Link to="/logout" onClick={handleLogout}>Logout</Link> }
-    <Link to="/">Home</Link>&nbsp;
+
+    {isAuth && <Link className='logout-btn' to="/logout" onClick={handleLogout}><LuLogOut/></Link> }
+         <a href="/home">
+        <img  src={logoImage} alt="Proftix"  />
+      </a> 
 
     
   </div>
           </nav>
             <Routes>
-                <Route
-                path="/"
+              {isAuth &&  <Route 
+                path="/home"
                 element={<Dashboard />}
-                />
+                />}
                 <Route
                 path="/api/auth/google/"
                 element={<GoogleLoginComponent />}
                 />
 
                 <Route
-                path="/login"
+                path="*"
                 element={<Login />}
                 />
                 <Route
@@ -97,29 +97,29 @@ const handleLogout = () => {
                 element={<EmailConfirmation/> } 
                 />
                 <Route 
-                path="/password-reset/confirm/:uidb64/:token/" 
+                path="/password-reset/confirm/:uid/:token/" 
                 element={<ForgetPassword/> } 
                 />
                 <Route
                 path="/error"
                 element={<Error />}
                 />
-                {/* <Route
+                <Route
                 path="/password-reset/"
-                element={<PasswordReset />}
+                element={<PasswordRest />}
                 />
-                    */}
+                {isAuth &&<Route
+                path="/admin"
+                element={<AdminPanel />}
+                />}
+                <Route
+                path="bar"
+                element={<Bar />}
+                />
+                   
             </Routes>
         </Router>
 
-
-
-
-
-
-
-
-        
     </div>
 
 

@@ -67,7 +67,7 @@ class Sale(models.Model):
 
     def __str__(self):
         """A string representation of the model."""
-        return f'{self.amount} from {self.branch}'
+        return f'{self.amount} from {self.branch.name}'
     
     class Meta:
         db_table = "sale"
@@ -81,7 +81,7 @@ class Expense(models.Model):
 
     def __str__(self):
         """A string representation of the model."""
-        return f'{self.amount} from {self.branch}'
+        return f'{self.amount} from {self.branch.name}'
     
     class Meta:
         db_table = "expense"
@@ -99,7 +99,7 @@ class ProfitAndLoss(models.Model):
 
     def __str__(self):
         """A string representation of the model."""
-        return f'{self.profit_or_loss} from {self.branch}'
+        return f'{self.profit_or_loss} from {self.branch.name}'
     
     class Meta:
         db_table = "profit_and_loss"

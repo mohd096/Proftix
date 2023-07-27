@@ -26,11 +26,12 @@ const EmailConfirmation = () => {
         await axios.post(`http://localhost:8000/api/auth/account-confirm-email/`, {key});
         // Email confirmed successfully
         setConfirmationStatus("success");
-        // window.location.href = "/login"; 
+        alert("Email confirmed successfully");
+        window.location.href = "/"; 
       } catch (error) {
         // Failed to confirm email
         setConfirmationStatus("error");
-        // window.location.href = "/error"; 
+        window.location.href = "/error"; 
       }
     };
 
@@ -42,7 +43,7 @@ const EmailConfirmation = () => {
       {hasError ? (
         <Error
           errorMessage="Failed to confirm email. Please try again later."
-          redirectUrl="/home" 
+          redirectUrl="/" 
         />
       ) : (
         <>
