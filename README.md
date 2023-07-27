@@ -3,6 +3,17 @@
 
 ## Proftix is a powerful financial dashboard that combines "profit" and "matrix" to offer a comprehensive view of your financial data, empowering you to make smart decisions and maximize profits. With its modern interface and user-friendly features, Proftix simplifies, visualizes, and optimizes your finances, making it the pathway to financial success.
 
+### Figma Link
+<link>https://www.figma.com/file/deSfof1H124tE6hu5rd3Oj/Proftix?type=whiteboard&t=DEKR7G2pF7frm1gb-6 </link>
+
+### Dashbord Page
+<img src='./frontend/my_react_app/public/Dashbord.png'>
+
+### Sign In Page 
+<img src='./frontend/my_react_app/public/signin.png'>
+
+### Admin Page 
+<img src='./frontend/my_react_app/public/Adminpage.png'> <img src='./frontend/my_react_app/public/Adminpage2.png'>
 
 ### Table of Contents
 1. #### Introduction
@@ -82,7 +93,7 @@ Frontend: React, React Router, React ChartJS
 Backend: Python, dJango, postgreSQL
 Authentication: JWT, dj_rest_auth, Google OAuth
 Email Verification: Nodemailer
-Data Visualization: Chart.js, React-chartjs-2, Nivo Bar Chart.
+Data Visualization: Chart.js, React-chartjs-2, Nivo Bar Chart .
 
 6. ### Contributing
 Contributions to Proftix are welcome! If you have any bug fixes, improvements, or new features to add, please open an issue or create a pull request. We appreciate your support!
