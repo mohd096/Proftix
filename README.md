@@ -81,7 +81,7 @@ Frontend: React, React Router, React ChartJS
 Backend: Python, dJango, postgreSQL
 Authentication: JWT, dj_rest_auth, Google OAuth
 Email Verification: Nodemailer
-Data Visualization: Chart.js, React-chartjs-2, Nivo Bar Chart
+Data Visualization: Chart.js, React-chartjs-2, Nivo Bar Chart.
 6. ### Contributing
 Contributions to Proftix are welcome! If you have any bug fixes, improvements, or new features to add, please open an issue or create a pull request. We appreciate your support!
 
