@@ -87,12 +87,14 @@ Check individual branch sales, expenses, and profit/loss records.
 Charts
 Utilize interactive charts to visualize financial data.
 Pie charts show the distribution of sales and expenses among branches.
+
 5. ### Technologies Used
 Frontend: React, React Router, React ChartJS
 Backend: Python, dJango, postgreSQL
 Authentication: JWT, dj_rest_auth, Google OAuth
 Email Verification: Nodemailer
-Data Visualization: Chart.js, React-chartjs-2, Nivo Bar Chart
+Data Visualization: Chart.js, React-chartjs-2, Nivo Bar Chart .
+
 6. ### Contributing
 Contributions to Proftix are welcome! If you have any bug fixes, improvements, or new features to add, please open an issue or create a pull request. We appreciate your support!
 
